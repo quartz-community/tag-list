@@ -80,5 +80,23 @@
   "engines": {
     "node": ">=22",
     "npm": ">=10.9.2"
+  },
+  "quartz": {
+    "name": "tag-list",
+    "displayName": "Tag List",
+    "category": "component",
+    "version": "1.0.0",
+    "quartzVersion": ">=5.0.0",
+    "dependencies": [],
+    "defaultOrder": 50,
+    "defaultEnabled": true,
+    "defaultOptions": {},
+    "components": {
+      "TagList": {
+        "displayName": "Tag List",
+        "defaultPosition": "beforeBody",
+        "defaultPriority": 30
+      }
+    }
   }
 }
