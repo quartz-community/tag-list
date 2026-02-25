@@ -10,12 +10,13 @@ npx quartz plugin add github:quartz-community/tag-list
 
 ## Usage
 
-```ts
-// quartz.layout.ts
-import * as Plugin from "./.quartz/plugins";
-
-// Add to your layout
-Plugin.TagList(); // in the appropriate layout section
+```yaml title="quartz.config.yaml"
+plugins:
+  - source: github:quartz-community/tag-list
+    enabled: true
+    layout:
+      position: beforeBody
+      priority: 30
 ```
 
 ## Configuration
@@ -24,7 +25,7 @@ This plugin has no configuration options.
 
 ## Documentation
 
-See the [Quartz documentation](https://quartz.jzhao.xyz/) for more information.
+See the [Quartz documentation](https://quartz.jzhao.xyz/plugins/TagList) for more information.
 
 ## License
 
