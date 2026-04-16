@@ -1,10 +1,8 @@
+import { classNames } from '@quartz-community/utils/lang';
 import { joinSegments, simplifySlug as simplifySlug$1 } from '@quartz-community/utils';
 import { jsx } from 'preact/jsx-runtime';
 
 // src/util/lang.ts
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
 function simplifySlug(fp) {
   return simplifySlug$1(fp);
 }
