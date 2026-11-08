@@ -6,19 +6,46 @@ import type {
 import { classNames } from "../util/lang";
 import { resolveRelative } from "../util/path";
 
-const TagList: QuartzComponent = ({ fileData, displayClass }: QuartzComponentProps) => {
+type PageData = { slug?: unknown };
+
+/** Slugs of every page, generated tag pages included, cached per build's page list. */
+const slugsOf = new WeakMap<object, Set<string>>();
+function pageSlugs(allFiles: PageData[]): Set<string> {
+  let slugs = slugsOf.get(allFiles);
+  if (!slugs) {
+    slugs = new Set(allFiles.flatMap((file) => (typeof file.slug === "string" ? [file.slug] : [])));
+    slugsOf.set(allFiles, slugs);
+  }
+  return slugs;
+}
+
+/**
+ * The page listing `tag`, if the site has one: `tags/<tag>`, or `tags/<tag>/index` for a tag with
+ * child tags. Without the tag-page plugin (or a hand-written page) there is none, and the tag is
+ * shown without a link rather than as a link to a page that does not exist.
+ */
+export function tagPageFor(tag: string, allFiles: PageData[]): string | undefined {
+  const slugs = pageSlugs(allFiles);
+  return [`tags/${tag}`, `tags/${tag}/index`].find((slug) => slugs.has(slug));
+}
+
+const TagList: QuartzComponent = ({ fileData, allFiles, displayClass }: QuartzComponentProps) => {
   const frontmatter = fileData.frontmatter as { tags?: string[] } | undefined;
   const tags = frontmatter?.tags;
   if (tags && tags.length > 0) {
     return (
       <ul class={classNames(displayClass, "tags")}>
         {tags.map((tag: string) => {
-          const linkDest = resolveRelative(fileData.slug as string, `tags/${tag}`);
+          const page = tagPageFor(tag, allFiles ?? []);
           return (
             <li>
-              <a href={linkDest} class="internal tag-link">
-                {tag}
-              </a>
+              {page ? (
+                <a href={resolveRelative(fileData.slug as string, page)} class="internal tag-link">
+                  {tag}
+                </a>
+              ) : (
+                <span class="tag-link">{tag}</span>
+              )}
             </li>
           );
         })}
@@ -50,7 +77,8 @@ TagList.css = `
   overflow-wrap: normal;
 }
 
-a.internal.tag-link {
+a.internal.tag-link,
+span.tag-link {
   border-radius: 8px;
   background-color: var(--highlight);
   padding: 0.2rem 0.4rem;
