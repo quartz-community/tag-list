@@ -1,6 +1,6 @@
 {
   "name": "@quartz-community/tag-list",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "TagList component for Quartz - displays page tags as linked badges",
   "type": "module",
   "license": "MIT",
