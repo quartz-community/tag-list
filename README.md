@@ -1,18 +1,20 @@
 # @quartz-community/tag-list
 
-Displays the list of tags associated with the current page as clickable links.
+Displays the list of tags associated with the current page. Each tag links to its tag page (from [`@quartz-community/tag-page`](https://github.com/quartz-community/tag-page) or a hand-written `tags/<tag>` page); a tag without a tag page is shown as plain text.
 
 ## Installation
 
 ```bash
-npx quartz plugin add github:quartz-community/tag-list
+npx quartz plugin add @quartz-community/tag-list
 ```
+
+Quartz's default configuration has a disabled entry for this plugin; set `enabled: true` to use it.
 
 ## Usage
 
 ```yaml title="quartz.config.yaml"
 plugins:
-  - source: github:quartz-community/tag-list
+  - source: "@quartz-community/tag-list"
     enabled: true
     layout:
       position: beforeBody
